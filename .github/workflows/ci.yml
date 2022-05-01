@@ -18,3 +18,15 @@ jobs:
       - name: Build App
         working-directory: ./aplicacao
         run: docker-compose up -d
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Reset db
+        working-directory: ./aplicacao
+        run: docker-compose run app rails db:reset
+      - name: Run Tests
+        working-directory: ./aplicacao
+        run: docker-compose run app rspec
