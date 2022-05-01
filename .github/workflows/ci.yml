@@ -21,6 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Build App
+        working-directory: ./aplicacao
+        run: docker-compose up -d
+
       - name: Reset db
         working-directory: ./aplicacao
         run: docker-compose run app rails db:reset
