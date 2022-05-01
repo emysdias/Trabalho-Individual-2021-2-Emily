@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Docker Network
-        run: docker network create gces-network
-
       - name: Build App
         working-directory: ./aplicacao
         run: docker-compose up -d
@@ -24,10 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Docker Network
-        working-directory: ./aplicacao
-        run: docker network create gces-network
-
       - name: Reset db
         working-directory: ./aplicacao
         run: docker-compose run app rails db:reset
@@ -41,10 +34,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Docker Network
-        working-directory: ./aplicacao
-        run: docker network create gces-network
-
       - name: Run Lint
         working-directory: ./aplicacao
         run: docker-compose run app bash -c "gem install rubocop; rubocop -A --fail-level F"
