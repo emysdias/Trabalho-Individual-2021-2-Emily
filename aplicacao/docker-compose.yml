@@ -6,11 +6,7 @@ services:
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    restart: always
-    ports:
-      - "5432:5432"
   nginx:
     image: nginx
     container_name: nginx
