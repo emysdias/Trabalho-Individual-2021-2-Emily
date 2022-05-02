@@ -2,9 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: ./aplicacao
 
 jobs:
   build:
@@ -13,31 +17,23 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build App
-        working-directory: ./aplicacao
         run: docker-compose up -d
 
-  test:
+  docker-test:
     name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build App
-        working-directory: ./aplicacao
-        run: docker-compose up -d
-
       - name: Reset db
-        working-directory: ./aplicacao
         run: docker-compose run app rails db:reset
 
       - name: Docker Test
-        working-directory: ./aplicacao
         run: docker-compose run app rspec
 
-  lint:
-    name: Lint
+  run-lint:
+    name: Run Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Run Lint
-        working-directory: ./aplicacao
         run: docker-compose run app bash -c "gem install rubocop; rubocop -A --fail-level F"
